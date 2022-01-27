@@ -1,0 +1,24 @@
+# =====
+FROM alpine AS builder
+WORKDIR /opt
+RUN apk update && \
+	apk add --no-cache git
+RUN	git clone --branch udpipe-2 https://github.com/ufal/udpipe.git && \
+	cd udpipe && \
+	rm -r -f wembedding_service && \
+    git clone https://github.com/ufal/wembedding_service.git
+
+# =====
+FROM tensorflow/tensorflow:1.15.4-gpu
+
+RUN du -h --max-depth=1 / || true
+
+WORKDIR /udpipe
+COPY --from=builder /opt/udpipe .
+RUN pip install --no-cache-dir ufal.chu_liu_edmonds ufal.udpipe
+{TEMPLATE_COPYMODELS}
+
+RUN du -h --max-depth=1 / || true
+
+EXPOSE 8001
+ENTRYPOINT python3 udpipe2_server.py 8001 --wembedding_server wembedding:8000 {TEMPLATE_ARGS}

@@ -1,0 +1,2 @@
+udpipe/models-2.6/*
+!udpipe/models-2.6/models_list.sh

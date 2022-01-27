@@ -1,0 +1,14 @@
+version: "3.9"
+services:
+  wembedding:
+    build:
+      context: ../wembedding
+      dockerfile: Dockerfile
+    ports:
+      - "${PORT_EMB:-8000}:8000"
+  udpipe2:
+    build:
+      context: ../udpipe
+      dockerfile: Dockerfile
+    ports:
+      - "${PORT:-8001}:8001"
