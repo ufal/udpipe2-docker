@@ -8,13 +8,13 @@ This project was used to dockerize [UDPipe2](https://ufal.mff.cuni.cz/udpipe/2).
 1. Clone this project
 
 ```
-$ git clone https://github.com/mazoea/udpipe2-docker.git
+git clone https://github.com/mazoea/udpipe2-docker.git
 ```
 
 2. Start the docker containers
 
 ```
-$ docker-compose up
+docker-compose up
 ```
 with output similar to
 
@@ -58,12 +58,12 @@ There are three ways how to process your text:
 2. Using text directly via `curl`:
 
 ```
-$ curl http://localhost:8001/process?data="Hello%20world.&tokenizer&tagger&parser"
+curl http://localhost:8001/process?data="Hello%20world.&tokenizer&tagger&parser"
 ```
 
 3. Using text file via `curl` (create your `input.txt` file):
 ```
-$ curl -F data=@input.txt -F tokenizer= -F tagger= -F parser= http://localhost:8001/process
+curl -F data=@input.txt -F tokenizer= -F tagger= -F parser= http://localhost:8001/process
 ```
 
 **NOTE**: The first processing takes longer in order for the model to load all required data.
@@ -73,18 +73,18 @@ $ curl -F data=@input.txt -F tokenizer= -F tagger= -F parser= http://localhost:8
 The language is set through variable before running docker containers.
 
 ```
-$ export U2LANG=en_ewt
+export U2LANG=en_ewt
 ```
 or Windows users
 ```
-$ set U2LANG=en_ewt
+set U2LANG=en_ewt
 ```
 
 and then start the service
 
 ```
- $ docker-compose up
- ```
+docker-compose up
+```
 
 And check http://localhost:8001/models .
 
