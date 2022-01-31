@@ -11,7 +11,19 @@ This project was used to dockerize [UDPipe2](https://ufal.mff.cuni.cz/udpipe/2).
 git clone https://github.com/mazoea/udpipe2-docker.git
 ```
 
-2. Start the docker containers
+2. Select required language model (default: `en_ewt`)
+
+The default language model can be changed via an environmental variable:
+
+```
+export U2LANG=en_ewt
+```
+On Windows use
+```
+set U2LANG=en_ewt
+```
+
+3. Start the docker containers
 
 ```
 docker-compose up
@@ -33,7 +45,7 @@ udpipe2_1     | Started UDPipe 2 server on port 8001.
 udpipe2_1     | To stop it gracefully, either send SIGINT (Ctrl+C) or SIGUSR1.
 ```
 
-3. Test the service by visiting http://localhost:8001/models that should give you a similar response to this
+4. Test the service by visiting http://localhost:8001/models that should give you a similar response to this
 
 ```json
 {
@@ -68,27 +80,6 @@ curl -F data=@input.txt -F tokenizer= -F tagger= -F parser= http://localhost:800
 
 **NOTE**: The first processing takes longer in order for the model to load all required data.
 
-## How to choose the  language
-
-The language is set through variable before running docker containers.
-
-```
-export U2LANG=en_ewt
-```
-or Windows users
-```
-set U2LANG=en_ewt
-```
-
-and then start the service
-
-```
-docker-compose up
-```
-
-And check http://localhost:8001/models .
-
-
 ## How to run on two GPUs
 
 ```
@@ -105,67 +96,3 @@ af_afribooms, ar_padt, be_hse, bg_btb, ca_ancora, cop_scriptorium, cs_cac, cs_cl
 
 
 ---
-
-## Run embeddings image on GPU directly
-
-```
-$ docker run -d --gpus '"device=0"' -p 8000:8000 ghcr.io/ufal/wembedding:tf-2.3.1-gpu-preloaded-staging
-
-$ docker ps -a
-CONTAINER ID   IMAGE                                    COMMAND                  CREATED              STATUS                      PORTS                                       NAMES
-9647d02e853d   wembedding:tf-2.3.1-gpu-preloaded   "python start_wembed…"   About a minute ago   Up About a minute           0.0.0.0:8000->8000/tcp, :::8000->8000/tcp   cranky_knuth
-
-$ nvidia-smi
-Fri Sep 24 08:59:29 2021
-+-----------------------------------------------------------------------------+
-| NVIDIA-SMI 455.32.00    Driver Version: 455.32.00    CUDA Version: 11.1     |
-|-------------------------------+----------------------+----------------------+
-| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
-| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
-|                               |                      |               MIG M. |
-|===============================+======================+======================|
-|   0  GeForce RTX 208...  Off  | 00000000:01:00.0 Off |                  N/A |
-| 31%   34C    P0    57W / 250W |      0MiB / 11019MiB |      0%      Default |
-|                               |                      |                  N/A |
-+-------------------------------+----------------------+----------------------+
-|   1  GeForce RTX 208...  Off  | 00000000:02:00.0 Off |                  N/A |
-| 32%   35C    P0     1W / 250W |      0MiB / 11019MiB |      0%      Default |
-|                               |                      |                  N/A |
-+-------------------------------+----------------------+----------------------+
-
-+-----------------------------------------------------------------------------+
-| Processes:                                                                  |
-|  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
-|        ID   ID                                                   Usage      |
-|=============================================================================|
-|  No running processes found                                                 |
-+-----------------------------------------------------------------------------+
-
-$ curl -s --data-binary @examples/request.json localhost:8000/wembeddings
-
-$ nvidia-smi
-Fri Sep 24 09:00:06 2021
-+-----------------------------------------------------------------------------+
-| NVIDIA-SMI 455.32.00    Driver Version: 455.32.00    CUDA Version: 11.1     |
-|-------------------------------+----------------------+----------------------+
-| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
-| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
-|                               |                      |               MIG M. |
-|===============================+======================+======================|
-|   0  GeForce RTX 208...  Off  | 00000000:01:00.0 Off |                  N/A |
-| 27%   35C    P2    57W / 250W |  10442MiB / 11019MiB |      0%      Default |
-|                               |                      |                  N/A |
-+-------------------------------+----------------------+----------------------+
-|   1  GeForce RTX 208...  Off  | 00000000:02:00.0 Off |                  N/A |
-| 32%   35C    P0     1W / 250W |      0MiB / 11019MiB |      0%      Default |
-|                               |                      |                  N/A |
-+-------------------------------+----------------------+----------------------+
-
-+-----------------------------------------------------------------------------+
-| Processes:                                                                  |
-|  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
-|        ID   ID                                                   Usage      |
-|=============================================================================|
-|    0   N/A  N/A     42878      C   python                          10439MiB |
-+-----------------------------------------------------------------------------+
-```
