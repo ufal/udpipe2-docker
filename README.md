@@ -2,6 +2,11 @@
 
 This project was used to dockerize [UDPipe2](https://ufal.mff.cuni.cz/udpipe/2). 
 
+## Requirements
+
+- docker
+- enough free space and reasonable network speed (the size of the default docker images is several GBs!)
+
 
 ## How to start UDPipe2 docker image
 
