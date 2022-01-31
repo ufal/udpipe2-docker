@@ -5,13 +5,13 @@ This project was used to dockerize [UDPipe2](https://ufal.mff.cuni.cz/udpipe/2).
 
 ## How to start UDPipe2 docker image
 
-1. Clone this project
+**1. Clone this project**
 
 ```
 git clone https://github.com/mazoea/udpipe2-docker.git
 ```
 
-2. Select required language model (default: `en_ewt`)
+**2. Select the required language model (default: `en_ewt`)**
 
 The default language model can be changed via an environmental variable:
 
@@ -23,7 +23,7 @@ On Windows use
 set U2LANG=en_ewt
 ```
 
-3. Start the docker containers
+**3. Start the docker containers**
 
 ```
 docker-compose up
@@ -45,7 +45,7 @@ udpipe2_1     | Started UDPipe 2 server on port 8001.
 udpipe2_1     | To stop it gracefully, either send SIGINT (Ctrl+C) or SIGUSR1.
 ```
 
-4. Test the service by visiting http://localhost:8001/models that should give you a similar response to this
+**4. Test the service by visiting http://localhost:8001/models that should give you a similar response to this**
 
 ```json
 {
@@ -67,13 +67,13 @@ There are three ways how to process your text:
 
 1. For testing: open `./html_page/run.html` in your web-browser, follow the description.
 
-2. Using text directly via `curl`:
+2. Setting the text directly via `curl`:
 
 ```
 curl http://localhost:8001/process?data="Hello%20world.&tokenizer&tagger&parser"
 ```
 
-3. Using text file via `curl` (create your `input.txt` file):
+3. Using a text file via `curl` (create your `input.txt` file):
 ```
 curl -F data=@input.txt -F tokenizer= -F tagger= -F parser= http://localhost:8001/process
 ```
