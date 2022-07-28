@@ -1,9 +1,9 @@
 # How to release
 
-1. Copy models to this directory
+1. Untar ud-2.10 models here
 1. Run 
 ```
-python create.py --models=./models-2.6/models_list.sh  --docker-tag="ghcr.io/ufal/udpipe:2-%s-tf-1.15.-gpu-staging"
+python create.py --models=./udpipe2-ud-2.10-220711/  --docker-tag="ghcr.io/ufal/udpipe:2.10-%s-tf-1.15.4-gpu-staging"
 ```
 
 This will create:
@@ -15,11 +15,20 @@ This will create:
 3. Verify the contents of `build.langs.bat` that it contains e.g.,
 
 ```
-$ docker build --progress=plain -f Dockerfile.af_afribooms -t ghcr.io/ufal/udpipe:2-af_afribooms-tf-1.15.-gpu-staging .
-$ docker push ghcr.io/ufal/udpipe:2-af_afribooms-tf-1.15.-gpu-staging
+$ docker build --progress=plain -f Dockerfile.af_afribooms -t ghcr.io/ufal/udpipe:2.10-af_afribooms-tf-1.15.-gpu-staging .
+$ docker push ghcr.io/ufal/udpipe:2.10-af_afribooms-tf-1.15.-gpu-staging
 ```
 
-4. Run `build.langs.bat`
+4. Run `build.langs.bat` (needs ghcr login with sufficient perm)
+
+5. all models is not entered into the batch script
+
+```
+DOCKER_BUILDKIT=1 docker build --progress=plain -f Dockerfile.all -t ghcr.io/ufal/udpipe:2.10-all-tf-1.15.4-gpu-staging .
+DOCKER_BUILDKIT=1 docker push ghcr.io/ufal/udpipe:2.10-all-tf-1.15.4-gpu-staging
+```
+
+6. especially between UD releases you might need to release wembeddings
 
 ---
 

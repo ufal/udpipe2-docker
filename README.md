@@ -95,7 +95,18 @@ docker-compose -f docker-compose.gpu.yml up
 
 ---
 
-# List of supported languages
+# List of supported languages in 2.10
+
+af_afribooms, ar_padt, be_hse, bg_btb, ca_ancora, cop_scriptorium, cs_cac, cs_cltt, cs_fictree, cs_pdt, cu_proiel, cy_ccg, da_ddt, de_gsd, de_hdt, el_gdt, en_atis, en_ewt, en_gum, en_lines, en_partut, es_ancora, es_gsd, et_edt, et_ewt, eu_bdt, fa_perdt, fa_seraji, fi_ftb, fi_tdt, fo_farpahc, fr_gsd, fr_parisstories, fr_partut, fr_rhapsodie, fr_sequoia, fro_srcmf, ga_idt, gd_arcosg, gl_ctg, gl_treegal, got_proiel, grc_perseus, grc_proiel, hbo_ptnk, he_htb, he_iahltwiki, hi_hdtb, hr_set, hu_szeged, hy_armtdp, hy_bsut, hyw_armtdp, id_csui, id_gsd, is_icepahc, is_modern, it_isdt, it_markit, it_partut, it_postwita, it_twittiro, it_vit, ja_gsd, ja_gsdluw, ko_gsd, ko_kaist, la_ittb, la_llct, la_perseus, la_proiel, la_udante, lt_alksnis, lt_hse, lv_lvtb, lzh_kyoto, mr_ufal, mt_mudt, nl_alpino, nl_lassysmall, no_bokmaal, no_nynorsk, no_nynorsklia, orv_birchbark, orv_rnc, orv_torot, pcm_nsc, pl_lfg, pl_pdb, pt_bosque, pt_gsd, qpm_philotis, qtd_sagt, ro_nonstandard, ro_rrt, ro_simonero, ru_gsd, ru_syntagrus, ru_taiga, sa_vedic, sk_snk, sl_ssj, sl_sst, sme_giella, sr_set, sv_lines, sv_talbanken, ta_ttb, te_mtg, tr_atis, tr_boun, tr_framenet, tr_imst, tr_kenet, tr_penn, tr_tourism, ug_udt, uk_iu, ur_udtb, vi_vtb, wo_wtb, zh_gsd, zh_gsdsimp
+
+---
+
+# Using the older 2.6 release
+
+either checkout an older version of this repository (`git checkout 0ffca5cb`) or set env variables `EMB=` and `MODELS_VERSION=2` either with export, in `.env` file or on command line `EMB= MODELS_VERSION=2 docker-compose ...`
+
+
+## List of supported languages in 2.6
 
 af_afribooms, ar_padt, be_hse, bg_btb, ca_ancora, cop_scriptorium, cs_cac, cs_cltt, cs_fictree, cs_pdt, cu_proiel, cy_ccg, da_ddt, de_gsd, de_hdt, el_gdt, en_ewt, en_gum, en_lines, en_partut, es_ancora, es_gsd, et_edt, et_ewt, eu_bdt, fa_seraji, fi_ftb, fi_tdt, fr_gsd, fr_partut, fr_sequoia, fr_spoken, fro_srcmf, ga_idt, gd_arcosg, gl_ctg, gl_treegal, got_proiel, grc_perseus, grc_proiel, he_htb, hi_hdtb, hr_set, hu_szeged, hy_armtdp, id_gsd, it_isdt, it_partut, it_postwita, it_twittiro, it_vit, ja_gsd, ko_gsd, ko_kaist, la_evalatin20, la_ittb, la_llct, la_perseus, la_proiel, lt_alksnis, lt_hse, lv_lvtb, lzh_kyoto, mr_ufal, mt_mudt, nl_alpino, nl_lassysmall, no_bokmaal, no_nynorsk, no_nynorsklia, orv_rnc, orv_torot, pcm_nsc, pl_lfg, pl_pdb, pt_bosque, pt_gsd, ro_nonstandard, ro_rrt, ru_gsd, ru_syntagrus, ru_taiga, sa_vedic, sk_snk, sl_ssj, sl_sst, sme_giella, sr_set, sv_lines, sv_talbanken, ta_ttb, te_mtg, tr_imst, ug_udt, uk_iu, ur_udtb, vi_vtb, wo_wtb, zh_gsd, zh_gsdsimp
 
