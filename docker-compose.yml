@@ -1,11 +1,11 @@
 version: "3.9"
 services:
   wembedding:
-    image: ghcr.io/ufal/wembedding:tf-2.3.1-gpu-preloaded-staging
+    image: ghcr.io/ufal/wembedding:${EMB-2.10-}tf-2.3.1-gpu-preloaded-staging
     ports:
       - "${PORT_EMB:-8000}:8000"
   udpipe2:
-    image: "ghcr.io/ufal/udpipe:2-${U2LANG:-en_ewt}-tf-1.15.4-gpu-staging"
+    image: "ghcr.io/ufal/udpipe:${MODELS_VERSION:-2.10}-${U2LANG:-en_ewt}-tf-1.15.4-gpu-staging"
     ports:
       - "${PORT:-8001}:8001"
     depends_on:

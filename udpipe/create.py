@@ -43,7 +43,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Creates `models_list.sh`')
     parser.add_argument('--list-langs', help='List languages', action='store_true')
     parser.add_argument('--models', help='Input `models_list.sh` with supported langugages',
-                        type=str, default='./models-2.6/models_list.sh')
+                        type=str)
     parser.add_argument('--docker-template', help='Docker template',
                         type=str, default='./_Dockerfile.template')
     parser.add_argument('--docker-tag', help='Tag to use',
@@ -65,11 +65,10 @@ if __name__ == '__main__':
         sys.exit(1)
 
     try:
-        with io.open(flags.models, mode='r', encoding='utf-8') as fin:
+        with io.open(os.path.join(flags.models, 'MODELS.txt'), mode='r', encoding='utf-8') as fin:
             lines = fin.readlines()
-        ack = [x.split('=')[1].strip() for x in lines if 'ack=' in x]
-        models = [x.split() for x in lines if '$ack' in x]
-        models = [(a1, a2, a3, ack[0]) for (a1, a2, a3, _1) in models]
+        models = [x.split() for x in lines]
+        models = [(a1, os.path.join(flags.models, a2), a3, a4) for (a1, a2, a3, a4) in models]
 
     except:
         _logger.critical('File [%s] in unknown format', flags.models)
@@ -81,22 +80,24 @@ if __name__ == '__main__':
     outputdir = os.path.dirname(flags.docker_template)
 
     _logger.info('Creating `all` Dockerfile')
-    create_docker(docker, outputdir, 'models-2.6', 'eng', models, dockerfile_suffix='all')
+    create_docker(docker, outputdir, flags.models, 'eng', models, dockerfile_suffix='all')
 
     docker_build_cmds = []
     build_tmpl = 'docker build --progress=plain -f %s -t %s .'
     push_tmpl = ' docker push %s'
+    rmi_tmpl = ' docker rmi %s'
 
     _logger.info('Creating [%d] lang specific Dockerfiles (and ignore files)' % len(models))
     for i, model in enumerate(models):
         # tags, path, lang_id, ack = model
-        dockerfile = create_docker(docker, outputdir, 'models-2.6', model[2], [model])
+        dockerfile = create_docker(docker, outputdir, flags.models, model[2], [model])
         tag =  flags.docker_tag % model[2]
         docker_build_cmds.append(build_tmpl % (os.path.basename(dockerfile), tag))
         docker_build_cmds.append(push_tmpl % tag)
         if i == 0:
             docker_build_cmds.append('echo Looks OK?')
             docker_build_cmds.append('pause')
+        docker_build_cmds.append(rmi_tmpl % tag)
 
 
     _logger.info('Creating batch script to build all lang images')
